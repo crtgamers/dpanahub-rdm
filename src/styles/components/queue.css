@@ -1,0 +1,112 @@
+/**
+ * Cola de descargas: queue-state-filter, queue-search-bar, bulk-actions.
+ * Depende de tokens.css.
+ */
+
+.queue-state-filter-wrap {
+  position: relative;
+  display: inline-block;
+}
+.queue-state-filter-wrap::after {
+  content: '';
+  position: absolute;
+  right: 0.65rem;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 0;
+  height: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 5px solid var(--text-secondary);
+  pointer-events: none;
+}
+.queue-state-filter {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  padding: 0.5rem 2rem 0.5rem 0.75rem;
+  font-size: var(--text-sm);
+  font-weight: 500;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--glass-border, var(--border-color));
+  color: var(--text-primary);
+  background-color: var(--glass-bg);
+  backdrop-filter: var(--glass-blur) var(--glass-saturate);
+  -webkit-backdrop-filter: var(--glass-blur) var(--glass-saturate);
+  cursor: pointer;
+  min-width: 11rem;
+  transition:
+    border-color var(--transition-fast),
+    box-shadow var(--transition-fast);
+}
+.queue-state-filter:hover {
+  border-color: var(--border-color-hover);
+}
+.queue-state-filter:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 2px var(--primary-color-alpha);
+}
+.queue-state-filter:focus-visible {
+  outline: 2px solid var(--primary-color);
+  outline-offset: 2px;
+}
+.queue-state-filter option {
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+}
+
+.btn-search-queue {
+  border-color: var(--border-color);
+  color: var(--text-secondary);
+  background: transparent;
+}
+.btn-search-queue:hover {
+  border-color: var(--primary-color);
+  color: var(--primary-color);
+  background: var(--primary-color-alpha-08);
+}
+.btn-search-queue.active {
+  border-color: var(--primary-color);
+  color: var(--primary-color);
+  background: var(--primary-color-alpha-12);
+}
+
+.queue-search-bar {
+  display: flex;
+  align-items: center;
+  margin-bottom: var(--spacing-md);
+  padding: var(--spacing-sm) var(--spacing-md);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--glass-border, var(--border-color));
+}
+.queue-search-input-group {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  flex: 1;
+  max-width: 24rem;
+}
+.queue-search-icon {
+  color: var(--text-muted);
+  flex-shrink: 0;
+}
+.queue-search-input {
+  flex: 1;
+  padding: 0.5rem 0.75rem;
+  font-size: var(--text-base);
+  border: none;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--text-primary);
+}
+.queue-search-input::placeholder {
+  color: var(--text-muted);
+}
+.queue-search-input:focus {
+  outline: none;
+}
+.queue-search-input:focus-visible {
+  outline: 2px solid var(--primary-color);
+  outline-offset: 2px;
+}

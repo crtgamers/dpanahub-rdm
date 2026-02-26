@@ -1,0 +1,668 @@
+/**
+ * Tema Frutiger Aero (dark + light).
+ *
+ * Auténtico estilo Windows Vista/7 (2004-2013):
+ * - Brillante, colorido, optimista
+ * - Glossy con reflejos superiores blancos visibles
+ * - Iluminación direccional (luz desde arriba)
+ * - Profundidad 3D suave (no flat)
+ * - Saturación moderada-alta
+ * - Blur(20px) con transparencias de vidrio real
+ * - Gradientes celeste → verde menta saturados
+ *
+ * Importar después de themes.css para mayor especificidad.
+ */
+
+/* ========================================
+   FRUTIGER AERO — DARK
+   Inspiración: Vista Aero oscuro con aurora boreal
+   ======================================== */
+body.aero-theme {
+  /* Glass: vidrio azulado translúcido con saturación alta */
+  --glass-bg: rgba(20, 60, 120, 0.42);
+  --glass-border: rgba(140, 210, 255, 0.25);
+  --glass-blur: blur(20px);
+  --glass-saturate: saturate(180%);
+  --overlay-blur: blur(14px);
+
+  /* Fondos: semi-transparentes para que se vea la imagen de fondo borrosa */
+  --bg-main: rgba(11, 30, 61, 0.72);
+  --bg-secondary: rgba(20, 70, 140, 0.5);
+  --bg-tertiary: rgba(30, 90, 160, 0.4);
+  --bg-hover: rgba(50, 120, 200, 0.4);
+
+  /* Texto: blanco-celeste brillante */
+  --text-primary: #f0f8ff;
+  --text-secondary: #a0d0f0;
+  --text-muted: #78b8e0;
+
+  /* Bordes: celeste visible */
+  --border-color: rgba(100, 190, 255, 0.22);
+  --border-subtle: rgba(80, 160, 230, 0.14);
+
+  /* Overlays */
+  --overlay-bg: rgba(5, 15, 35, 0.6);
+  --overlay-bg-05: rgba(0, 10, 30, 0.05);
+  --overlay-bg-10: rgba(0, 10, 30, 0.1);
+  --overlay-bg-20: rgba(0, 10, 30, 0.2);
+  --overlay-bg-30: rgba(0, 10, 30, 0.3);
+  --overlay-bg-70: rgba(5, 15, 35, 0.7);
+  --overlay-bg-80: rgba(5, 15, 35, 0.8);
+  --overlay-bg-90: rgba(5, 15, 35, 0.9);
+  --surface-overlay-02: rgba(100, 200, 255, 0.03);
+  --surface-overlay-05: rgba(100, 200, 255, 0.07);
+  --surface-overlay-10: rgba(100, 200, 255, 0.12);
+  --surface-overlay-60: rgba(100, 200, 255, 0.3);
+
+  /* Sombras: difusas con tinte azulado */
+  --shadow-sm: 0 2px 6px rgba(0, 20, 60, 0.25);
+  --shadow-md: 0 4px 16px rgba(0, 20, 60, 0.3), 0 2px 6px rgba(0, 20, 60, 0.15);
+  --shadow-lg: 0 8px 32px rgba(0, 15, 50, 0.35), 0 4px 12px rgba(0, 15, 50, 0.2);
+  --shadow-xl: 0 16px 48px rgba(0, 15, 50, 0.4), 0 8px 20px rgba(0, 15, 50, 0.2);
+  --shadow-2xl: 0 24px 64px rgba(0, 15, 50, 0.45);
+
+  /* Bordes más redondeados */
+  --radius-lg: 0.875rem;
+  --radius-xl: 1.25rem;
+
+  /* Logs */
+  --logs-bg: #061228;
+  --log-level-info: #7cc4fa;
+  --log-level-warn: #f0d080;
+  --log-level-warn-bg: #1a2540;
+  --log-level-error: #f08080;
+  --log-level-debug: #6ed4e0;
+  --log-message: #b0d0f0;
+  --log-meta: #5080a8;
+  --log-scope: #c8a0f0;
+  --log-level-badge-bg: #1e3860;
+  --log-entry-bg: rgba(100, 200, 255, 0.03);
+  --log-entry-bg-hover: rgba(100, 200, 255, 0.07);
+
+  /* ========================================
+     Aero-specific tokens (dark)
+     Estos valores definen la "personalidad" Aero:
+     reflejos visibles, glow real, profundidad 3D
+     ======================================== */
+
+  /* Reflejo blanco superior — firma visual de Aero (visible, no sutil) */
+  --aero-inner-glow: inset 0 1px 1px 0 rgba(255, 255, 255, 0.15);
+  /* Sombra de panel difusa con tinte azul */
+  --aero-panel-shadow: 0 8px 40px rgba(0, 30, 80, 0.4);
+  /* Glow ambiental: sigue el color primario elegido en configuraciones */
+  --aero-glow-color: rgba(var(--primary-color-rgb), 0.28);
+  /* Gradiente glossy: efecto "burbuja" de arriba (luz) a abajo (sombra) */
+  --aero-glossy-top: rgba(255, 255, 255, 0.12);
+  --aero-glossy-bottom: rgba(0, 0, 0, 0.08);
+  /* Borde luminoso superior para paneles */
+  --aero-border-highlight: rgba(180, 230, 255, 0.3);
+}
+
+/* ========================================
+   AERO — FONDO CON IMAGEN BORROSA (dark)
+   Capa fija detrás de todo; la imagen se ve suavizada
+   para que el contenido destaque pero la escena sea reconocible. Imagen: public/fondos/fondo-obscuro.webp
+   ======================================== */
+body.aero-theme::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background-image: url('/fondos/fondo-obscuro.webp');
+  background-size: cover;
+  background-position: center;
+  filter: blur(12px);
+  transform: scale(1.08);
+}
+
+/* Overlay suave sobre la foto para legibilidad (dark) */
+body.aero-theme,
+body.aero-theme html,
+body.aero-theme #app {
+  background-color: transparent;
+  background-image:
+    radial-gradient(ellipse at 20% 0%, rgba(56, 189, 248, 0.18) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 90%, rgba(52, 211, 153, 0.12) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 40%, rgba(96, 165, 250, 0.06) 0%, transparent 60%),
+    linear-gradient(180deg, rgba(10, 25, 50, 0.5) 0%, transparent 35%);
+}
+
+/* ========================================
+   FRUTIGER AERO — LIGHT
+   Inspiración: cielo azul brillante, luz natural,
+   sensación optimista y aireada (no minimalista gris)
+   ======================================== */
+body.aero-theme.light-mode {
+  /* Glass: vidrio claro con tinte celeste, muy transparente */
+  --glass-bg: rgba(255, 255, 255, 0.5);
+  --glass-border: rgba(120, 190, 255, 0.4);
+
+  /* Fondos: semi-transparentes para que se vea la imagen de fondo borrosa */
+  --bg-main: rgba(214, 236, 250, 0.7);
+  --bg-secondary: rgba(255, 255, 255, 0.55);
+  --bg-tertiary: rgba(200, 230, 255, 0.5);
+  --bg-hover: rgba(180, 220, 255, 0.55);
+
+  /* Texto: azul oscuro profundo para contraste */
+  --text-primary: #0a1e38;
+  --text-secondary: #2a5578;
+  --text-muted: #3a6590;
+
+  /* Bordes: celeste suave pero visible */
+  --border-color: rgba(100, 180, 240, 0.4);
+  --border-subtle: rgba(140, 200, 245, 0.3);
+
+  /* Overlays light */
+  --overlay-bg: rgba(180, 215, 250, 0.55);
+  --overlay-bg-05: rgba(0, 40, 100, 0.04);
+  --overlay-bg-10: rgba(0, 40, 100, 0.07);
+  --overlay-bg-20: rgba(0, 40, 100, 0.12);
+  --surface-overlay-10: rgba(0, 40, 100, 0.06);
+  --surface-overlay-60: rgba(0, 40, 100, 0.2);
+
+  /* Sombras: azuladas suaves */
+  --shadow-sm: 0 2px 6px rgba(0, 50, 120, 0.1);
+  --shadow-md: 0 4px 14px rgba(0, 50, 120, 0.12);
+
+  /* Logs */
+  --logs-bg: #eaf4ff;
+  --log-level-badge-bg: #d0e4f8;
+  --log-entry-bg: rgba(0, 60, 140, 0.04);
+  --log-entry-bg-hover: rgba(0, 60, 140, 0.07);
+
+  /* Aero tokens light — reflejos MÁS brillantes sobre fondo claro */
+  --aero-inner-glow: inset 0 1px 2px 0 rgba(255, 255, 255, 0.9);
+  --aero-panel-shadow: 0 8px 36px rgba(0, 50, 120, 0.15);
+  /* Glow: sigue el color primario elegido en configuraciones */
+  --aero-glow-color: rgba(var(--primary-color-rgb), 0.22);
+  --aero-glossy-top: rgba(255, 255, 255, 0.7);
+  --aero-glossy-bottom: rgba(0, 50, 120, 0.04);
+  --aero-border-highlight: rgba(255, 255, 255, 0.8);
+}
+
+/* Fondo con imagen suavizada (light). Imagen: public/fondos/fondo-claro.webp */
+body.aero-theme.light-mode::before {
+  background-image: url('/fondos/fondo-claro.webp');
+  filter: blur(12px);
+}
+
+/* Overlay suave sobre la foto para legibilidad (light) */
+body.aero-theme.light-mode,
+body.aero-theme.light-mode html,
+body.aero-theme.light-mode #app {
+  background-color: transparent;
+  background-image:
+    radial-gradient(ellipse at 15% 0%, rgba(56, 189, 248, 0.2) 0%, transparent 45%),
+    radial-gradient(ellipse at 85% 95%, rgba(52, 211, 153, 0.18) 0%, transparent 45%),
+    radial-gradient(ellipse at 50% 30%, rgba(96, 165, 250, 0.1) 0%, transparent 55%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.35) 0%, transparent 25%);
+}
+
+/* ========================================
+   AERO — GLASS EFFECT
+   Vidrio real: reflejo superior + sombra difusa + profundidad
+   ======================================== */
+body.aero-theme .glass-effect {
+  box-shadow: var(--aero-inner-glow), var(--aero-panel-shadow);
+  border-top-color: var(--aero-border-highlight);
+}
+
+/* ========================================
+   AERO — TITLEBAR
+   Barra superior con iluminación y reflejo
+   ======================================== */
+body.aero-theme .titlebar {
+  border-bottom-color: var(--glass-border);
+  background-image: linear-gradient(180deg, var(--aero-glossy-top) 0%, transparent 60%);
+}
+
+body.aero-theme .titlebar-title {
+  text-shadow: 0 0 14px rgba(var(--primary-color-rgb), 0.5);
+}
+
+body.aero-theme .titlebar-btn:hover {
+  background: var(--aero-glow-color);
+  box-shadow:
+    0 0 12px var(--aero-glow-color),
+    var(--aero-inner-glow);
+}
+
+/* ========================================
+   AERO — SIDEBAR
+   Panel translúcido con profundidad y reflejo lateral
+   ======================================== */
+body.aero-theme .sidebar {
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur) var(--glass-saturate);
+  -webkit-backdrop-filter: var(--glass-blur) var(--glass-saturate);
+  border-right-color: var(--glass-border);
+  box-shadow:
+    var(--aero-inner-glow),
+    3px 0 24px rgba(0, 30, 80, 0.2);
+}
+
+body.aero-theme .sidebar__nav-item:hover {
+  background: var(--aero-glow-color);
+  box-shadow:
+    var(--aero-inner-glow),
+    0 0 10px var(--aero-glow-color);
+}
+
+body.aero-theme .sidebar__nav-item--active {
+  background: linear-gradient(
+    180deg,
+    rgba(var(--primary-color-rgb), 0.3) 0%,
+    rgba(var(--primary-color-rgb), 0.15) 100%
+  );
+  box-shadow:
+    var(--aero-inner-glow),
+    0 0 14px rgba(var(--primary-color-rgb), 0.25);
+}
+
+body.aero-theme .sidebar__logo-icon {
+  box-shadow:
+    0 0 16px rgba(var(--primary-color-rgb), 0.4),
+    var(--aero-inner-glow);
+}
+
+/* ========================================
+   AERO — CARDS & PANELS
+   Efecto "ventana flotante" con glossy y profundidad
+   ======================================== */
+body.aero-theme .setting-card,
+body.aero-theme .folder-card,
+body.aero-theme .stat-card {
+  border-radius: var(--radius-lg);
+  border-color: var(--glass-border);
+  border-top-color: var(--aero-border-highlight);
+  background-image: linear-gradient(180deg, var(--aero-glossy-top) 0%, transparent 50%);
+  box-shadow: var(--aero-inner-glow), var(--shadow-md);
+}
+
+body.aero-theme .setting-card:hover,
+body.aero-theme .folder-card:hover {
+  box-shadow:
+    var(--aero-inner-glow),
+    var(--shadow-lg),
+    0 0 20px var(--aero-glow-color);
+  border-top-color: var(--aero-border-highlight);
+}
+
+/* ========================================
+   AERO — BOTONES DE CARPETAS (grilla y lista)
+   Estilo ventana Aero Vista/7: vidrio, profundidad, brillo en borde superior
+   ======================================== */
+body.aero-theme .folder-btn {
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur) var(--glass-saturate);
+  -webkit-backdrop-filter: var(--glass-blur) var(--glass-saturate);
+  border: 1px solid var(--glass-border);
+  border-top-color: var(--aero-border-highlight);
+  border-radius: var(--radius-lg);
+  background-image: linear-gradient(
+    180deg,
+    var(--aero-glossy-top) 0%,
+    transparent 35%,
+    var(--aero-glossy-bottom) 100%
+  );
+  box-shadow:
+    var(--aero-inner-glow),
+    0 4px 16px rgba(0, 20, 60, 0.25),
+    0 2px 6px rgba(0, 15, 40, 0.15);
+}
+
+body.aero-theme .folder-btn:hover {
+  border-top-color: var(--aero-border-highlight);
+  border-color: rgba(var(--primary-color-rgb), 0.35);
+  box-shadow:
+    var(--aero-inner-glow),
+    0 8px 28px rgba(0, 20, 60, 0.35),
+    0 0 20px var(--aero-glow-color),
+    0 0 0 1px rgba(var(--primary-color-rgb), 0.15);
+  transform: translateY(-4px);
+}
+
+body.aero-theme .folder-btn:active {
+  background-image: linear-gradient(
+    180deg,
+    var(--aero-glossy-bottom) 0%,
+    transparent 40%,
+    var(--aero-glossy-top) 100%
+  );
+  box-shadow:
+    inset 0 2px 6px rgba(0, 0, 0, 0.12),
+    0 2px 10px rgba(0, 20, 60, 0.2);
+  transform: translateY(-2px);
+}
+
+/* Icono de carpeta: mini “ventana” Aero con brillo */
+body.aero-theme .folder-icon-wrapper {
+  background: rgba(255, 255, 255, 0.08);
+  background-image: linear-gradient(180deg, var(--aero-glossy-top) 0%, transparent 60%);
+  border: 1px solid var(--glass-border);
+  border-top-color: var(--aero-border-highlight);
+  border-radius: var(--radius-md);
+  box-shadow:
+    var(--aero-inner-glow),
+    0 2px 8px rgba(0, 15, 40, 0.2);
+}
+
+body.aero-theme .folder-btn:hover .folder-icon-wrapper {
+  background: var(--primary-color);
+  background-image: linear-gradient(180deg, var(--aero-glossy-top) 0%, transparent 50%);
+  border-top-color: rgba(255, 255, 255, 0.4);
+  box-shadow:
+    var(--aero-inner-glow),
+    0 0 14px rgba(var(--primary-color-rgb), 0.4),
+    0 2px 10px rgba(0, 15, 40, 0.25);
+  color: var(--text-on-primary);
+  transform: scale(1.1);
+}
+
+/* Vista lista: mismo acabado vidrioso, menos elevación en hover */
+body.aero-theme .folders-list-view .folder-btn {
+  box-shadow:
+    var(--aero-inner-glow),
+    0 2px 10px rgba(0, 20, 60, 0.2);
+}
+
+body.aero-theme .folders-list-view .folder-btn:hover {
+  box-shadow:
+    var(--aero-inner-glow),
+    0 4px 18px rgba(0, 20, 60, 0.3),
+    0 0 16px var(--aero-glow-color),
+    0 0 0 1px rgba(var(--primary-color-rgb), 0.12);
+}
+
+/* ========================================
+   AERO — BUTTONS
+   Efecto "burbuja" glossy: gradiente vertical + reflejo + glow
+   Firma visual del estilo Aero auténtico
+   ======================================== */
+body.aero-theme .primary-btn {
+  border-radius: var(--radius-lg);
+  background-image: linear-gradient(
+    180deg,
+    var(--aero-glossy-top) 0%,
+    transparent 45%,
+    var(--aero-glossy-bottom) 100%
+  );
+  box-shadow:
+    var(--aero-inner-glow),
+    0 2px 10px rgba(var(--primary-color-rgb), 0.3);
+  border: 1px solid rgba(var(--primary-color-rgb), 0.3);
+  border-top-color: var(--aero-border-highlight);
+}
+
+body.aero-theme .primary-btn:hover {
+  box-shadow:
+    var(--aero-inner-glow),
+    0 0 22px rgba(var(--primary-color-rgb), 0.45),
+    0 4px 16px rgba(var(--primary-color-rgb), 0.25);
+}
+
+body.aero-theme .primary-btn:active {
+  background-image: linear-gradient(
+    180deg,
+    var(--aero-glossy-bottom) 0%,
+    transparent 50%,
+    var(--aero-glossy-top) 100%
+  );
+  box-shadow:
+    inset 0 2px 4px rgba(0, 0, 0, 0.15),
+    0 0 10px rgba(var(--primary-color-rgb), 0.2);
+}
+
+body.aero-theme .nav-action-btn {
+  border-radius: var(--radius-md);
+  background-image: linear-gradient(180deg, var(--aero-glossy-top) 0%, transparent 60%);
+  box-shadow: var(--aero-inner-glow), var(--shadow-sm);
+  border-top-color: var(--aero-border-highlight);
+}
+
+body.aero-theme .nav-action-btn:hover {
+  box-shadow:
+    var(--aero-inner-glow),
+    0 0 14px var(--aero-glow-color);
+}
+
+body.aero-theme .icon-btn {
+  border-radius: var(--radius-md);
+  background-image: linear-gradient(180deg, var(--aero-glossy-top) 0%, transparent 70%);
+}
+
+body.aero-theme .icon-btn:hover {
+  box-shadow:
+    var(--aero-inner-glow),
+    0 0 12px var(--aero-glow-color);
+}
+
+body.aero-theme .action-btn-pill {
+  background-image: linear-gradient(180deg, var(--aero-glossy-top) 0%, transparent 50%);
+  box-shadow: var(--aero-inner-glow), var(--shadow-sm);
+}
+
+/* ========================================
+   AERO — iOS SWITCH
+   Glow al activar
+   ======================================== */
+body.aero-theme .ios-switch:checked {
+  box-shadow:
+    0 0 12px rgba(var(--primary-color-rgb), 0.4),
+    var(--aero-inner-glow);
+}
+
+/* ========================================
+   AERO — MODALS & PANELS
+   Ventanas flotantes con vidrio, glossy header y profundidad
+   ======================================== */
+body.aero-theme .modal-overlay,
+body.aero-theme .settings-overlay {
+  backdrop-filter: blur(14px) saturate(140%);
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
+}
+
+body.aero-theme .settings-panel,
+body.aero-theme .logs-panel,
+body.aero-theme .statistics-panel {
+  border-radius: var(--radius-xl);
+  border-color: var(--glass-border);
+  border-top-color: var(--aero-border-highlight);
+  background-image: linear-gradient(180deg, var(--aero-glossy-top) 0%, transparent 15%);
+  box-shadow:
+    var(--aero-inner-glow),
+    var(--shadow-2xl),
+    0 0 50px rgba(var(--primary-color-rgb), 0.08);
+}
+
+body.aero-theme .settings-header {
+  border-bottom-color: var(--glass-border);
+  background-image: linear-gradient(180deg, var(--aero-glossy-top) 0%, transparent 100%);
+}
+
+/* ========================================
+   AERO — SPEED INDICATOR
+   ======================================== */
+body.aero-theme .speed-indicator {
+  border-radius: var(--radius-lg);
+  border-color: var(--glass-border);
+  border-top-color: var(--aero-border-highlight);
+  background-image: linear-gradient(180deg, var(--aero-glossy-top) 0%, transparent 70%);
+  box-shadow: var(--aero-inner-glow), var(--shadow-sm);
+}
+
+body.aero-theme .speed-indicator.has-active {
+  box-shadow:
+    var(--aero-inner-glow),
+    0 0 14px rgba(var(--primary-color-rgb), 0.2);
+}
+
+/* ========================================
+   AERO — SEARCH INPUT
+   ======================================== */
+body.aero-theme .search-input-group {
+  border-radius: var(--radius-lg);
+  box-shadow: var(--aero-inner-glow);
+  border-top-color: var(--aero-border-highlight);
+}
+
+body.aero-theme .search-input-group:focus-within {
+  box-shadow:
+    0 0 0 3px rgba(var(--primary-color-rgb), 0.25),
+    0 0 18px var(--aero-glow-color),
+    var(--aero-inner-glow);
+}
+
+/* ========================================
+   AERO — FORM ELEMENTS (selects, inputs)
+   ======================================== */
+body.aero-theme .settings-select,
+body.aero-theme .modern-select {
+  border-radius: var(--radius-md);
+  background-image: linear-gradient(180deg, var(--aero-glossy-top) 0%, transparent 60%);
+  box-shadow: var(--aero-inner-glow);
+  border-top-color: var(--aero-border-highlight);
+}
+
+body.aero-theme .settings-input,
+body.aero-theme .number-input,
+body.aero-theme .path-input {
+  background-image: linear-gradient(180deg, var(--aero-glossy-bottom) 0%, transparent 30%);
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+/* ========================================
+   AERO — TABLES
+   ======================================== */
+body.aero-theme .table-row:hover {
+  background: var(--aero-glow-color);
+  box-shadow: var(--aero-inner-glow);
+}
+
+/* ========================================
+   AERO — QUEUE STATE FILTER
+   ======================================== */
+body.aero-theme .queue-state-filter {
+  border-radius: var(--radius-lg);
+  background-image: linear-gradient(180deg, var(--aero-glossy-top) 0%, transparent 60%);
+  box-shadow: var(--aero-inner-glow);
+}
+
+/* ========================================
+   AERO — SCROLLBARS
+   Celeste translúcido
+   ======================================== */
+body.aero-theme ::-webkit-scrollbar-thumb {
+  background: rgba(var(--primary-color-rgb), 0.25);
+  background-clip: content-box;
+}
+
+body.aero-theme ::-webkit-scrollbar-thumb:hover {
+  background: rgba(var(--primary-color-rgb), 0.4);
+  background-clip: content-box;
+}
+
+body.aero-theme.light-mode ::-webkit-scrollbar-thumb {
+  background: rgba(var(--primary-color-rgb), 0.22);
+  background-clip: content-box;
+}
+
+body.aero-theme.light-mode ::-webkit-scrollbar-thumb:hover {
+  background: rgba(var(--primary-color-rgb), 0.38);
+  background-clip: content-box;
+}
+
+/* ========================================
+   AERO — CHUNK PROGRESS
+   ======================================== */
+body.aero-theme:not(.light-mode) .chunk-index {
+  text-shadow: 0 1px 4px rgba(0, 20, 50, 0.6);
+}
+
+body.aero-theme.light-mode .chunk-index {
+  text-shadow: none;
+}
+
+/* ========================================
+   AERO — DANGER CARDS
+   ======================================== */
+body.aero-theme .danger-action-card {
+  background-image: linear-gradient(180deg, var(--aero-glossy-top) 0%, transparent 50%);
+}
+
+/* ========================================
+   AERO — ACTION CARDS
+   ======================================== */
+body.aero-theme .action-card {
+  background-image: linear-gradient(180deg, var(--aero-glossy-top) 0%, transparent 50%);
+  box-shadow: var(--aero-inner-glow);
+  border-top-color: var(--aero-border-highlight);
+}
+
+body.aero-theme .action-card:hover {
+  box-shadow:
+    var(--aero-inner-glow),
+    0 0 14px var(--aero-glow-color);
+}
+
+/* ========================================
+   AERO — SETTINGS FOOTER
+   ======================================== */
+body.aero-theme .settings-footer {
+  background-image: linear-gradient(0deg, var(--aero-glossy-top) 0%, transparent 100%);
+}
+
+/* ========================================
+   AERO — COLOR DOT (color picker)
+   Glossy dots
+   ======================================== */
+body.aero-theme .color-dot {
+  box-shadow: var(--aero-inner-glow);
+}
+
+body.aero-theme .color-dot.active {
+  box-shadow:
+    0 0 12px var(--aero-glow-color),
+    var(--aero-inner-glow);
+}
+
+/* ========================================
+   AERO + PERFORMANCE MODE
+   Desactiva blur y glow pero conserva colores y gradientes
+   ======================================== */
+body.aero-theme.performance-mode::before {
+  filter: none;
+}
+
+body.aero-theme.performance-mode .glass-effect,
+body.aero-theme.performance-mode .sidebar {
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  box-shadow: var(--shadow-md);
+}
+
+body.aero-theme.performance-mode .titlebar-btn:hover,
+body.aero-theme.performance-mode .icon-btn:hover,
+body.aero-theme.performance-mode .nav-action-btn:hover,
+body.aero-theme.performance-mode .primary-btn:hover,
+body.aero-theme.performance-mode .folder-btn:hover {
+  box-shadow: none;
+}
+
+body.aero-theme.performance-mode .folder-btn {
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  background: var(--bg-secondary);
+}
+
+body.aero-theme.performance-mode .settings-panel,
+body.aero-theme.performance-mode .logs-panel,
+body.aero-theme.performance-mode .statistics-panel {
+  box-shadow: var(--shadow-lg);
+}
+
+body.aero-theme.performance-mode .modal-overlay,
+body.aero-theme.performance-mode .settings-overlay {
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}

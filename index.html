@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0"
+    />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:;"
+    />
+    <link
+      rel="icon"
+      href="/logo.svg"
+      type="image/svg+xml"
+    />
+    <link
+      rel="preload"
+      href="/logo.svg"
+      as="image"
+    />
+    <title>Dpana Hub – ROM Download Manager</title>
+  </head>
+  <body>
+    <div id="app">
+      <style>
+        /* Loader inicial: colores neutros (fondo y texto). El color de acento se aplica en la pantalla Vue (InitializationScreen). */
+        .initial-loader {
+          position: fixed;
+          inset: 0;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          background-color: #0b0f1a;
+          color: #f9fafb;
+          font-family:
+            system-ui,
+            -apple-system,
+            sans-serif;
+          z-index: 99999;
+        }
+        .loader-content {
+          text-align: center;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          gap: 1.25rem;
+        }
+        .spinner {
+          width: 2.5rem;
+          height: 2.5rem;
+          border: 0.1875rem solid rgba(255, 255, 255, 0.15);
+          border-top-color: #f9fafb;
+          border-radius: 50%;
+          animation: spin 0.8s linear infinite;
+        }
+        @keyframes spin {
+          to {
+            transform: rotate(360deg);
+          }
+        }
+        .loader-logo {
+          width: 3rem;
+          height: 3rem;
+          object-fit: contain;
+          filter: brightness(0) invert(1);
+        }
+        .loader-text {
+          font-weight: 800;
+          letter-spacing: 0.125rem;
+          font-size: 0.875rem;
+          opacity: 0.85;
+        }
+      </style>
+      <div class="initial-loader">
+        <div class="loader-content">
+          <img
+            src="/logo.svg"
+            alt=""
+            class="loader-logo"
+            fetchpriority="high"
+          />
+          <div class="spinner"></div>
+          <div class="loader-text">DPANA HUB</div>
+        </div>
+      </div>
+    </div>
+    <script
+      type="module"
+      src="/src/main.ts"
+    ></script>
+  </body>
+</html>

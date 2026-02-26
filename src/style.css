@@ -1,0 +1,19 @@
+/**
+ * Punto de entrada de estilos globales (Vue frontend).
+ * Orden: tokens → reset-base → layout → components (forms, buttons, modals) → utilities → components.css (resto) → themes.
+ * La paleta por defecto es "Emerald & Frost" (dark); body.light-mode aplica tema claro.
+ *
+ * Convención de nombres CSS:
+ * - BEM para bloques complejos: .sidebar__nav-item, .sidebar__nav-item--active (sidebar, modals).
+ * - Guiones para el resto: .setting-card, .empty-state; modificador con doble guión: .setting-card--disabled.
+ */
+@import './styles/tokens.css';
+@import './styles/reset-base.css';
+@import './styles/layout.css';
+@import './styles/components/forms.css';
+@import './styles/components/buttons.css';
+@import './styles/components/modals.css';
+@import './styles/utilities.css';
+@import './styles/components.css';
+@import './styles/themes.css';
+@import './styles/aero-theme.css';
